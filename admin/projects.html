@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Admin Dashboard</title>
+    <link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main-optimized.css">
+    <link rel="stylesheet" href="styles/projects.css">
+    <style>
+        /* Professional project card styling */
+        .project-card {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.04), 0 4px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .project-card .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.25rem 1.5rem; /* Consistent rem units */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .project-card .card-header h5 {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: #1a202c;
+        }
+        
+        .project-card .card-body {
+            padding: 1.5rem; /* Consistent rem units */
+        }
+        
+        .project-card .card-footer {
+            background-color: #f7fafc;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.5rem; /* Consistent rem units */
+        }
+        
+        .project-card .card-text {
+            color: #2d3748;
+            line-height: 1.6;
+            font-size: 0.9375rem;
+        }
+        
+        .project-details {
+            color: #4a5568;
+            font-size: 0.875rem;
+            margin-top: 1.5rem;
+        }
+        
+        .project-details strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .project-details .mb-2 {
+            margin-bottom: 0.75rem !important;
+        }
+        
+        .team-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .team-badges .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.35em 0.65em;
+            border-radius: 0.375rem;
+        }
+        
+        /* Project status badges with colors */
+        .badge.status-planning {
+            background-color: #a0aec0;
+            color: white;
+        }
+        
+        .badge.status-in-progress {
+            background-color: #3182ce;
+            color: white;
+        }
+        
+        .badge.status-completed {
+            background-color: #38a169;
+            color: white;
+        }
+        
+        .badge.status-urgent {
+            background-color: #e53e3e;
+            color: white;
+        }
+        
+        .badge.status-on-hold {
+            background-color: #ed8936;
+            color: white;
+        }
+        
+        /* Team badges with colors matching the project style */
+        .badge.team-development {
+            background-color: #3182ce;
+            color: white;
+        }
+        
+        .badge.team-design {
+            background-color: #805ad5;
+            color: white;
+        }
+        
+        .badge.team-marketing {
+            background-color: #38a169;
+            color: white;
+        }
+        
+        .badge.team-qa {
+            background-color: #dd6b20;
+            color: white;
+        }
+        
+        .badge.team-devops {
+            background-color: #718096;
+            color: white;
+        }
+        
+        /* Project buttons */
+        .project-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .project-actions .btn {
+            transition: all 0.2s ease;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+        
+        .project-actions .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .project-actions .btn-edit {
+            background-color: transparent;
+            border-color: #3182ce;
+            color: #3182ce;
+        }
+        
+        .project-actions .btn-edit:hover {
+            background-color: #3182ce;
+            color: white;
+        }
+        
+        .project-actions .btn-delete {
+            background-color: transparent;
+            border-color: #e53e3e;
+            color: #e53e3e;
+        }
+        
+        .project-actions .btn-delete:hover {
+            background-color: #e53e3e;
+            color: white;
+        }
+        
+        /* Chat button styling */
+        .project-actions .btn-chat {
+            background-color: transparent;
+            border-color: #38a169;
+            color: #38a169;
+        }
+        
+        .project-actions .btn-chat:hover {
+            background-color: #38a169;
+            color: white;
+        }
+        
+        /* Chat modal styling */
+        .chat-container {
+            display: flex;
+            height: 500px;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+        
+        .teams-sidebar {
+            width: 30%;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+        
+        .team-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .team-item:hover {
+            background-color: #edf2f7;
+        }
+        
+        .team-item.active {
+            background-color: #e6f7ff;
+            border-left: 3px solid #3182ce;
+        }
+        
+        .team-item-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: white;
+        }
+        
+        .team-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .team-leader {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+        
+        .chat-content {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: #f8f9fa;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: #ffffff;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+        
+        .message-incoming {
+            align-self: flex-start;
+        }
+        
+        .message-outgoing {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            position: relative;
+        }
+        
+        .message-incoming .message-bubble {
+            background-color: #f2f2f2;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .message-outgoing .message-bubble {
+            background-color: #3182ce;
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+        }
+        
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            color: #718096;
+        }
+        
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            background-color: #f8f9fa;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-input-container .form-control {
+            border-radius: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .chat-input-container .btn {
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+        }
+        
+        /* Responsive improvements for smaller screens */
+        @media (max-width: 767.98px) {
+            .project-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .project-actions .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
+        /* Add project button styling */
+        .btn-add-project {
+            background-color: #3182ce;
+            border-color: #3182ce;
+            color: white;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-add-project:hover {
+            background-color: #2c5282;
+            border-color: #2c5282;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        /* Projects grid layout */
+        .projects-grid {
+            margin-top: 1.5rem;
+        }
+        
+        /* Error messages styling */
+        .alert-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1050;
+            max-width: 25rem;
+        }
+        
+        /* Loading spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1060;
+            display: none;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>Project Manager</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                        <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+                    </svg> Dashboard</a></li>
+                <li class="active"><a href="projects.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5v-1zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-1zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
+                    </svg> Projects</a></li>
+                <li><a href="users.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm3-2a2 2 0 1 0 0 4a2 2 0 0 0 0-4Z"/>
+                    </svg> Users</a></li>
+                <li><a href="teams.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill me-2" viewBox="0 0 16 16">
+                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                    </svg> Teams</a></li>
+                <li><a href="reports.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                        <path d="M10 13.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v6zm-2.5.5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm-3 0a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                    </svg> Reports</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content" id="content">
+        <header class="dashboard-header">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <div class="d-flex align-items-center">
+                    <button id="sidebarToggle" class="sidebar-toggle me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </button>
+                    <h1>Projects Management</h1>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <div id="profileDisplay" class="profile-display dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="visibility: hidden; cursor: pointer;">
+                            <span id="profileName" class="profile-name"></span>
+                            <img id="profilePicture" class="profile-picture" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBmaWxsPSIjNjc2NzY3Ij48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjEwMCIgZmlsbD0iI2UyZThmMCIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSI0MCIvPjxwYXRoIGQ9Ik0xNjAgMTgwYzAtMzMuMTQtMjYuODYtNjAtNjAtNjBzLTYwIDI2Ljg2LTYwIDYwaDEyMHoiLz48L3N2Zz4=" alt="Profile Picture">
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person me-2" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                </svg> Profile</a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid mt-3 mb-4">
+            <button class="btn btn-add-project">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle me-2" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg> Add New Project
+            </button>
+        </div>
+
+        <div class="projects-grid">
+            <div class="row mt-4">
+                <!-- Project Card 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 project-card" data-project-id="1">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Website Redesign</h5>
+                            <span class="badge status-in-progress" data-status="in-progress" role="status" aria-label="Project status: In Progress">In Progress</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Complete overhaul of the company website with modern design principles and improved user experience.</p>
+                            <div class="project-details mt-3">
+                                <div class="mb-2"><strong>Deadline:</strong> June 15, 2025</div>
+                                <div class="mb-2">
+                                    <strong>Teams:</strong>
+                                    <div class="mt-1 team-badges">
+                                        <span class="badge team-development">Development</span>
+                                        <span class="badge team-design">Design</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">Created: April 10, 2025</small>
+                            <div class="project-actions">
+                                <button class="btn btn-chat me-1" data-bs-toggle="modal" data-bs-target="#projectChatModal" data-project-id="1" data-project-name="Website Redesign">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots me-1" viewBox="0 0 16 16">
+                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+                                    </svg> Chat
+                                </button>
+                                <button class="btn btn-edit me-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square me-1" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg> Edit
+                                </button>
+                                <button class="btn btn-delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 me-1" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                    </svg> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 project-card" data-project-id="2">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Mobile App Development</h5>
+                            <span class="badge status-planning" data-status="planning" role="status" aria-label="Project status: Planning">Planning</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Create a new mobile application for both iOS and Android platforms to enhance customer engagement and provide better service access.</p>
+                            <div class="project-details mt-3">
+                                <div class="mb-2"><strong>Deadline:</strong> September 30, 2025</div>
+                                <div class="mb-2">
+                                    <strong>Teams:</strong>
+                                    <div class="mt-1 team-badges">
+                                        <span class="badge team-development">Development</span>
+                                        <span class="badge team-design">Design</span>
+                                        <span class="badge team-qa">QA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">Created: April 25, 2025</small>
+                            <div class="project-actions">
+                                <button class="btn btn-chat me-1" data-bs-toggle="modal" data-bs-target="#projectChatModal" data-project-id="2" data-project-name="Mobile App Development">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots me-1" viewBox="0 0 16 16">
+                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+                                    </svg> Chat
+                                </button>
+                                <button class="btn btn-edit me-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square me-1" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg> Edit
+                                </button>
+                                <button class="btn btn-delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 me-1" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                    </svg> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 project-card" data-project-id="3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Product Launch Campaign</h5>
+                            <span class="badge status-urgent" data-status="urgent" role="status" aria-label="Project status: Urgent">Urgent</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Develop and execute a comprehensive marketing campaign for the upcoming product launch, including social media, email marketing, and PR activities.</p>
+                            <div class="project-details mt-3">
+                                <div class="mb-2"><strong>Deadline:</strong> May 20, 2025</div>
+                                <div class="mb-2">
+                                    <strong>Teams:</strong>
+                                    <div class="mt-1 team-badges">
+                                        <span class="badge team-marketing">Marketing</span>
+                                        <span class="badge team-design">Design</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent d-flex justify-content-between">
+                            <small class="text-muted">Created: May 1, 2025</small>
+                            <div class="project-actions">
+                                <button class="btn btn-chat me-1" data-bs-toggle="modal" data-bs-target="#projectChatModal" data-project-id="3" data-project-name="Product Launch Campaign">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots me-1" viewBox="0 0 16 16">
+                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+                                    </svg> Chat
+                                </button>
+                                <button class="btn btn-edit me-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square me-1" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg> Edit
+                                </button>
+                                <button class="btn btn-delete">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3 me-1" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                    </svg> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Bootstrap library for styling only -->
+        <script src="../libs/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="../scripts/user-data.js"></script>
+
+
+        <!-- Add New Project Modal -->
+        <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProjectModalLabel">Add New Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form validation error summary -->
+                        <div class="alert alert-danger d-none" id="addFormErrorSummary" role="alert">
+                            Please correct the errors in the form before submitting.
+                        </div>
+                        
+                        <form id="addProjectForm" novalidate>
+                            <div class="mb-3">
+                                <label for="addProjectName" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="addProjectName" required minlength="5" maxlength="30">
+                                <div class="invalid-feedback">Project name must be between 5 and 30 characters.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addProjectDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="addProjectDescription" rows="3" required minlength="20"></textarea>
+                                <div class="invalid-feedback">Description must be at least 20 characters long.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Assign Teams</label>
+                                <div class="card">
+                                    <div class="card-body p-3">
+                                        <div id="addTeamCheckboxes" aria-describedby="addTeamsHelp">
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="1" id="addTeam1" name="addProjectTeams">
+                                                    <label class="form-check-label" for="addTeam1">
+                                                        Development Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="2" id="addTeam2" name="addProjectTeams">
+                                                    <label class="form-check-label" for="addTeam2">
+                                                        Design Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="3" id="addTeam3" name="addProjectTeams">
+                                                    <label class="form-check-label" for="addTeam3">
+                                                        Marketing Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="4" id="addTeam4" name="addProjectTeams">
+                                                    <label class="form-check-label" for="addTeam4">
+                                                        QA Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="5" id="addTeam5" name="addProjectTeams">
+                                                    <label class="form-check-label" for="addTeam5">
+                                                        DevOps Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="addTeamsHelp" class="form-text">Select at least one team for the project.</div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback" id="addTeamsInvalidFeedback">Please select at least one team.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addProjectStatus" class="form-label">Project Status</label>
+                                <select class="form-select" id="addProjectStatus" required>
+                                    <option value="" disabled>Select a status</option>
+                                    <option value="planning">Planning</option>
+                                    <option value="in-progress" selected>In Progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="on-hold">On Hold</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a project status.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addProjectDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" id="addProjectDeadline" required min="" aria-describedby="addDeadlineHelp">
+                                <div id="addDeadlineHelp" class="form-text">Deadline must be a future date.</div>
+                                <div class="invalid-feedback">Please select a valid future date.</div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="createProjectBtn">Create Project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Edit Project Modal -->
+        <div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProjectModalLabel">Edit Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form validation error summary -->
+                        <div class="alert alert-danger d-none" id="editFormErrorSummary" role="alert">
+                            Please correct the errors in the form before submitting.
+                        </div>
+                        
+                        <form id="editProjectForm" novalidate>
+                            <!-- Hidden field for project ID (used in edit mode) -->
+                            <input type="hidden" id="editProjectId" value="">
+                            <div class="mb-3">
+                                <label for="editProjectName" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="editProjectName" required minlength="5" maxlength="30">
+                                <div class="invalid-feedback">Project name must be between 5 and 30 characters.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProjectDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="editProjectDescription" rows="3" required minlength="20"></textarea>
+                                <div class="invalid-feedback">Description must be at least 20 characters long.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Assign Teams</label>
+                                <div class="card">
+                                    <div class="card-body p-3">
+                                        <div id="editTeamCheckboxes" aria-describedby="editTeamsHelp">
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="1" id="editTeam1" name="editProjectTeams">
+                                                    <label class="form-check-label" for="editTeam1">
+                                                        Development Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="2" id="editTeam2" name="editProjectTeams">
+                                                    <label class="form-check-label" for="editTeam2">
+                                                        Design Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="3" id="editTeam3" name="editProjectTeams">
+                                                    <label class="form-check-label" for="editTeam3">
+                                                        Marketing Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="4" id="editTeam4" name="editProjectTeams">
+                                                    <label class="form-check-label" for="editTeam4">
+                                                        QA Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input team-checkbox" type="checkbox" value="5" id="editTeam5" name="editProjectTeams">
+                                                    <label class="form-check-label" for="editTeam5">
+                                                        DevOps Team
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="editTeamsHelp" class="form-text">Select at least one team for the project.</div>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback" id="editTeamsInvalidFeedback">Please select at least one team.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProjectStatus" class="form-label">Project Status</label>
+                                <select class="form-select" id="editProjectStatus" required>
+                                    <option value="" disabled>Select a status</option>
+                                    <option value="planning">Planning</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="on-hold">On Hold</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a project status.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editProjectDeadline" class="form-label">Deadline</label>
+                                <input type="date" class="form-control" id="editProjectDeadline" required min="" aria-describedby="editDeadlineHelp">
+                                <div id="editDeadlineHelp" class="form-text">Deadline must be a future date.</div>
+                                <div class="invalid-feedback">Please select a valid future date.</div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="updateProjectBtn">Update Project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete the project <strong id="deleteProjectName"></strong>?</p>
+                        <p class="text-danger">This action cannot be undone.</p>
+                        <input type="hidden" id="deleteProjectId" value="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Project</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Project Chat Modal -->
+        <div class="modal fade" id="projectChatModal" tabindex="-1" aria-labelledby="projectChatModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="projectChatModalLabel">Chat - <span id="chatProjectName"></span></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="chat-container">
+                            <!-- Teams Sidebar -->
+                            <div class="teams-sidebar">
+                                <div class="p-3 border-bottom">
+                                    <h6 class="mb-0">Project Teams</h6>
+                                </div>
+                                <div id="projectTeamsList">
+                                    <!-- Teams will be populated here dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Chat Content -->
+                            <div class="chat-content">
+                                <div class="chat-header">
+                                    <h6 class="mb-0">Chat with <span id="selectedTeamName">Team Leader</span></h6>
+                                </div>
+                                <div class="chat-messages" id="chatMessages">
+                                    <div class="d-flex justify-content-center align-items-center h-100">
+                                        <p class="text-muted">Select a team to start chatting</p>
+                                    </div>
+                                </div>
+                                <div class="chat-input">
+                                    <form id="chatForm">
+                                        <div class="chat-input-container">
+                                            <input type="text" class="form-control" id="messageInput" placeholder="Type your message..." disabled>
+                                            <button type="submit" class="btn btn-primary" id="sendMessageBtn" disabled>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+            </div>
+        </div>
+        <script src="../libs/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="../scripts/user-data.js"></script>
+        <script src="../scripts/common.js"></script>
+        <script src="../scripts/logout.js"></script>
+        <script src="../scripts/sidebar-toggle.js"></script>
+        <script src="../scripts/profile-loader.js"></script>
+        <script src="scripts/profile-dropdown.js"></script>
+        <script src="../scripts/toast-notification.js"></script>
+        <script src="scripts/projects.js"></script>
+        
+        <script>
+            // Special fix for projects page dropdown
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get the profile dropdown element
+                const profileDropdown = document.getElementById('profileDisplay');
+                
+                if (profileDropdown) {
+                    // Create a new dropdown instance directly
+                    const dropdownInstance = new bootstrap.Dropdown(profileDropdown);
+                    
+                    // Add click handler to manually toggle the dropdown
+                    profileDropdown.addEventListener('click', function(e) {
+                        dropdownInstance.toggle();
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,284 @@
+/* Custom styles for reports.html */
+
+/***************************
+ * REPORTS PAGE ELEMENTS
+ ***************************/
+
+/* Reports container */
+.reports-container {
+    margin-top: 1.5rem;
+}
+
+/* Report filters */
+.report-filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #4a5568;
+    margin-bottom: 0;
+}
+
+/* Report card */
+.report-card {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.report-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background-color: #f8fafc;
+}
+
+.report-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Performance table styling */
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+    cursor: pointer;
+}
+
+.table th {
+    font-weight: 600;
+    color: #495057;
+    border-top: none;
+    background-color: #f8f9fa;
+}
+
+.progress {
+    border-radius: 0.25rem;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.progress-bar.bg-success {
+    background-color: #28a745 !important;
+}
+
+.progress-bar.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.progress-bar.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* View Report Modal Styling */
+.modal-lg {
+    max-width: 800px;
+}
+
+.modal-body h6.text-muted {
+    font-weight: 600;
+    color: #6c757d;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.modal-body .table-sm th {
+    background-color: transparent;
+    font-weight: 600;
+    color: #495057;
+}
+
+.modal-body .table-sm td {
+    color: #212529;
+}
+
+.metric-item .progress {
+    height: 8px;
+    margin-top: 4px;
+}
+
+.list-group-flush .list-group-item {
+    padding: 0.5rem 0;
+    border-color: #f0f0f0;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.card-body.bg-light {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+/* Badge styling */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 0.25rem;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-outline-primary {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+}
+
+.view-report-btn {
+    white-space: nowrap;
+}
+
+/* Chart containers */
+.chart-container {
+    height: 300px;
+    margin-bottom: 1.5rem;
+}
+
+/* Data tables */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.report-table th {
+    background-color: #f7fafc;
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid #e2e8f0;
+    color: #4a5568;
+}
+
+.report-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2d3748;
+}
+
+.report-table tr:hover {
+    background-color: #f7fafc;
+}
+
+/* Performance indicators */
+.performance-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.indicator-positive {
+    color: #38a169;
+}
+
+.indicator-negative {
+    color: #e53e3e;
+}
+
+.indicator-neutral {
+    color: #718096;
+}
+
+/* Summary metrics */
+.metrics-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.metric-title {
+    font-size: 0.875rem;
+    color: #718096;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.25rem;
+}
+
+.metric-change {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .metrics-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .report-filters {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .metrics-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+}

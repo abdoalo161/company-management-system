@@ -1,0 +1,116 @@
+/**
+ * Responsive Tables CSS
+ * Styles for making tables responsive on small screens
+ */
+
+/* General responsive table styles */
+@media (max-width: 991.98px) {
+    /* Add horizontal scrolling for tables on medium screens */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border: 0;
+    }
+    
+    /* Ensure proper spacing in table cells */
+    .table td, .table th {
+        white-space: nowrap;
+        padding: 10px 12px;
+    }
+}
+
+/* Card-based table layout for small screens */
+@media (max-width: 767.98px) {
+    /* Team members table specific styles */
+    .team-members-table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    
+    .team-members-table tbody tr {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        margin-bottom: 8px;
+    }
+    
+    .team-members-table tbody td {
+        display: flex;
+        padding: 8px 12px;
+        border: none;
+        text-align: left;
+        width: 100%;
+    }
+    
+    .team-members-table tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        width: 120px;
+        min-width: 120px;
+        color: #4a5568;
+    }
+    
+    /* Tasks table specific styles */
+    .tasks-table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    
+    .tasks-table tbody tr {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 12px 0;
+        margin-bottom: 8px;
+    }
+    
+    .tasks-table tbody td {
+        display: flex;
+        padding: 8px 12px;
+        border: none;
+        text-align: left;
+        width: 100%;
+    }
+    
+    .tasks-table tbody td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        width: 120px;
+        min-width: 120px;
+        color: #4a5568;
+    }
+    
+    /* Adjust avatar and name display */
+    .tasks-table .avatar,
+    .team-members-table .avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    /* Ensure progress bars display properly */
+    .progress {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    /* Adjust action buttons */
+    .dropdown .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 575.98px) {
+    .team-members-table tbody td:before,
+    .tasks-table tbody td:before {
+        width: 100px;
+        min-width: 100px;
+    }
+    
+    .team-members-table tbody td,
+    .tasks-table tbody td {
+        flex-wrap: wrap;
+        padding: 6px 8px;
+    }
+}

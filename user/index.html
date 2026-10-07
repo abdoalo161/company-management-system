@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks - User Portal</title>
+    <link rel="stylesheet" href="../libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <!-- Task modal styles are now included in styles/index.css -->
+    <!-- Profile display styles are now included in styles/main.css -->
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2>Project Manager</h2>
+        </div>
+        <nav>
+            <ul>
+                <li class="active"><a href="index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-check me-2" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                    </svg> My Tasks</a></li>
+                <li><a href="chat.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots me-2" viewBox="0 0 16 16">
+                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+                    </svg> Chat</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center">
+                    <button id="sidebarToggle" class="sidebar-toggle me-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </button>
+                    <h1>My Tasks</h1>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <div id="profileDisplay" class="profile-display dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="visibility: hidden; cursor: pointer;">
+                            <span id="profileName" class="profile-name"></span>
+                            <img id="profilePicture" class="profile-picture" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBmaWxsPSIjNjc2NzY3Ij48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjEwMCIgZmlsbD0iI2UyZThmMCIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjgwIiByPSI0MCIvPjxwYXRoIGQ9Ik0xNjAgMTgwYzAtMzMuMTQtMjYuODYtNjAtNjAtNjBzLTYwIDI2Ljg2LTYwIDYwaDEyMHoiLz48L3N2Zz4=" alt="Profile Picture">
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="profile.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person me-2" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                                </svg> Profile</a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutButton">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                </svg> Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <!-- Welcome Section -->
+            <div class="welcome-section" style="visibility: hidden;" id="welcomeSection">
+                <h2>Welcome back, <span id="welcomeUserName"></span>!</h2>
+                <p>You have <span id="totalTaskCount"></span> tasks assigned to you. <span id="dueTodayCount"></span> of them are due today.</p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls mb-3">
+                <div class="d-flex justify-content-end">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="taskFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filter
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="taskFilterDropdown">
+                            <li><a class="dropdown-item active" href="#" data-filter="all">All Tasks</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="due-today">Due Today</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="completed">Completed</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="in-progress">In Progress</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="blocked">Blocked</a></li>
+                            <li><a class="dropdown-item" href="#" data-filter="high-priority">High Priority</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tasks Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">My Tasks</h2>
+                </div>
+                <div class="card-body">
+                    <!-- Task list is hidden initially to prevent flash of unfiltered content -->
+                    <ul class="task-list" style="visibility: hidden;">
+                        <li class="task-item">
+                            <div class="task-content">
+                                <h5 class="task-title">Complete frontend homepage design</h5>
+                                <p class="task-description">Implement the new design for the homepage according to the mockups provided by the design team.</p>
+                                <div class="task-meta">
+                                    <span class="task-due-date">Due today</span>
+                                    <span class="task-priority priority-high">High Priority</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-content">
+                                <h5 class="task-title">Fix responsive layout issues</h5>
+                                <p class="task-description">Address the responsive layout issues on mobile devices for the dashboard page.</p>
+                                <div class="task-meta">
+                                    <span class="task-due-date">Due today</span>
+                                    <span class="task-priority priority-medium">Medium Priority</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-content">
+                                <h5 class="task-title">Implement user authentication</h5>
+                                <p class="task-description">Set up user authentication with JWT tokens and secure routes on the backend.</p>
+                                <div class="task-meta">
+                                    <span class="task-due-date">Due in 2 days</span>
+                                    <span class="task-priority priority-high">High Priority</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item" data-status="completed">
+                            <div class="task-content">
+                                <h5 class="task-title completed-task">Create API documentation</h5>
+                                <p class="task-description">Document all API endpoints using Swagger for the developer portal.</p>
+                                <div class="task-meta">
+                                    <span class="task-due-date">Completed</span>
+                                    <span class="task-priority priority-low">Low Priority</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="task-item">
+                            <div class="task-content">
+                                <h5 class="task-title">Optimize database queries</h5>
+                                <p class="task-description">Review and optimize database queries to improve application performance.</p>
+                                <div class="task-meta">
+                                    <span class="task-due-date">Due in 5 days</span>
+                                    <span class="task-priority priority-medium">Medium Priority</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Details Modal -->    
+    <div class="modal fade" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header chat-modal-header">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar bg-light text-primary rounded-circle me-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; font-size: 16px; border: 1px solid #e0e0e0;" id="taskDetailsHeaderAvatar">TL</div>
+                        <h5 class="modal-title mb-0" id="taskDetailsModalLabel">Task Details</h5>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted">Assigned By</h6>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" id="taskAssignerAvatar">
+                                TL
+                            </div>
+                            <div>
+                                <h6 class="mb-0" id="taskAssignerName">Team Leader</h6>
+                                <small class="text-muted" id="taskAssignerRole">Project Manager</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="task-details-content">
+                        <div class="mb-3">
+                            <h6 class="form-label">Task Title</h6>
+                            <p class="form-control-static" id="viewTaskTitle">Complete frontend homepage design</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="form-label">Description</h6>
+                            <p class="form-control-static" id="viewTaskDescription">Implement the new design for the homepage according to the mockups provided by the design team.</p>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="form-label">Priority</h6>
+                                <p class="form-control-static" id="viewTaskPriority"><span class="badge bg-danger">High</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="form-label">Category</h6>
+                                <p class="form-control-static" id="viewTaskCategory">Development</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6 class="form-label">Start Date</h6>
+                                <p class="form-control-static" id="viewTaskStartDate">2025-05-10</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="form-label">Due Date</h6>
+                                <p class="form-control-static" id="viewTaskDueDate">2025-05-14</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="form-label">Estimated Hours</h6>
+                            <p class="form-control-static" id="viewTaskEstimatedHours">8 hours</p>
+                        </div>
+                        <div class="mb-3" id="viewTaskAttachmentsContainer">
+                            <h6 class="form-label">Attachments</h6>
+                            <div id="viewTaskAttachments" class="list-group">
+                                <!-- Attachments will be added here dynamically -->
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="form-label">Status</h6>
+                            <select class="form-select" id="taskStatus">
+                                <option value="not-started">Not Started</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="blocked">Blocked</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="taskBlockedReasonContainer" style="display: none;">
+                            <h6 class="form-label">Reason Blocked</h6>
+                            <textarea class="form-control" id="taskBlockedReason" rows="2" placeholder="Explain why this task is blocked"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateTaskStatusBtn">Update Status</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/user-data.js"></script>
+    <script src="../scripts/toast-notification.js"></script>
+
+    <script src="../scripts/logout.js"></script>
+    <script src="../scripts/profile-loader.js"></script>
+    <script src="../scripts/sidebar-toggle.js"></script>
+    <script src="../scripts/toast-notification.js"></script>
+    <script src="scripts/profile.js"></script>
+    <script src="scripts/index.js"></script>
+    <script>
+        // Initialize the profile display when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof ProjectManager.UserProfile !== 'undefined') {
+                ProjectManager.UserProfile.init();
+            }
+            
+            // Initialize index page functionality including sidebar toggle
+            if (typeof ProjectManager.Index !== 'undefined') {
+                ProjectManager.Index.init();
+            }
+            
+            // Main functionality is now handled by specific modules
+            // Sidebar toggle is handled by Index module
+            
+            // Update welcome message with user's first name and task counts
+            updateWelcomeMessage();
+            updateTaskCounts();
+            
+            // Initialize task status dropdown behavior
+            const taskStatus = document.getElementById('taskStatus');
+            const blockedReasonContainer = document.getElementById('taskBlockedReasonContainer');
+            
+            if (taskStatus) {
+                taskStatus.addEventListener('change', function() {
+                    if (this.value === 'blocked') {
+                        blockedReasonContainer.style.display = 'block';
+                    } else {
+                        blockedReasonContainer.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Make tasks clickable to open the modal
+            const taskItems = document.querySelectorAll('.task-item');
+            let currentTaskItem = null;
+            
+            taskItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Store reference to the current task item
+                    currentTaskItem = item;
+                    
+                    const taskTitle = item.querySelector('.task-title').textContent;
+                    const taskDescription = item.querySelector('.task-description').textContent;
+                    const priorityEl = item.querySelector('.task-priority');
+                    const dueDate = item.querySelector('.task-due-date').textContent;
+                    
+                    // Reset status dropdown to match current task state
+                    const taskStatus = document.getElementById('taskStatus');
+                    
+                    // Default to not-started
+                    taskStatus.value = 'not-started';
+                    
+                    // Check if it has a status stored in data attribute
+                    if (item.dataset.status) {
+                        taskStatus.value = item.dataset.status;
+                    }
+                    
+                    // Hide blocked reason container by default
+                    document.getElementById('taskBlockedReasonContainer').style.display = 
+                        taskStatus.value === 'blocked' ? 'block' : 'none';
+                    
+                    // Set modal values
+                    document.getElementById('viewTaskTitle').textContent = taskTitle;
+                    document.getElementById('viewTaskDescription').textContent = taskDescription;
+                    document.getElementById('viewTaskDueDate').textContent = dueDate.replace('Due ', '');
+                    
+                    // Set priority badge
+                    let priorityClass = 'bg-secondary';
+                    let priorityText = 'Normal';
+                    
+                    if (priorityEl) {
+                        if (priorityEl.classList.contains('priority-high')) {
+                            priorityClass = 'bg-danger';
+                            priorityText = 'High';
+                        } else if (priorityEl.classList.contains('priority-medium')) {
+                            priorityClass = 'bg-warning text-dark';
+                            priorityText = 'Medium';
+                        } else if (priorityEl.classList.contains('priority-low')) {
+                            priorityClass = 'bg-success';
+                            priorityText = 'Low';
+                        }
+                    }
+                    
+                    document.getElementById('viewTaskPriority').innerHTML = 
+                        `<span class="badge ${priorityClass}">${priorityText}</span>`;
+                    
+                    // Open the modal
+                    const taskModal = new bootstrap.Modal(document.getElementById('taskDetailsModal'));
+                    taskModal.show();
+                });
+            });
+            
+            // Handle update status button click
+            const updateTaskStatusBtn = document.getElementById('updateTaskStatusBtn');
+            if (updateTaskStatusBtn) {
+                updateTaskStatusBtn.addEventListener('click', function() {
+                    if (!currentTaskItem) return;
+                    
+                    const taskStatus = document.getElementById('taskStatus');
+                    const statusValue = taskStatus.value;
+                    
+                    // Update the task item with the new status
+                    currentTaskItem.dataset.status = statusValue;
+                    
+                    // Update task appearance based on status
+                    if (statusValue === 'completed') {
+                        // Mark as completed
+                        currentTaskItem.querySelector('.task-title').classList.add('completed-task');
+                        currentTaskItem.querySelector('.task-due-date').textContent = 'Completed';
+                    } else {
+                        // Remove completed styling
+                        currentTaskItem.querySelector('.task-title').classList.remove('completed-task');
+                        
+                        // If it was previously completed, restore the due date
+                        const dueDate = currentTaskItem.querySelector('.task-due-date');
+                        if (dueDate.textContent === 'Completed') {
+                            // Get the due date from the modal
+                            const modalDueDate = document.getElementById('viewTaskDueDate').textContent;
+                            dueDate.textContent = modalDueDate ? ('Due ' + modalDueDate) : 'Due today';
+                        }
+                    }
+                    
+                    // Reapply the current filter after updating task status
+                    applyCurrentFilter();
+                    
+                    // If status is blocked, store the reason
+                    if (statusValue === 'blocked') {
+                        const blockedReason = document.getElementById('taskBlockedReason').value;
+                        currentTaskItem.dataset.blockedReason = blockedReason;
+                        
+                        // Add a visual indicator for blocked tasks
+                        const statusBadge = document.createElement('span');
+                        statusBadge.className = 'badge bg-secondary ms-2';
+                        statusBadge.textContent = 'Blocked';
+                        
+                        // Remove any existing status badge first
+                        const existingBadge = currentTaskItem.querySelector('.status-badge');
+                        if (existingBadge) {
+                            existingBadge.remove();
+                        }
+                        
+                        statusBadge.classList.add('status-badge');
+                        currentTaskItem.querySelector('.task-title').appendChild(statusBadge);
+                    } else {
+                        // Remove blocked badge if exists
+                        const existingBadge = currentTaskItem.querySelector('.status-badge');
+                        if (existingBadge) {
+                            existingBadge.remove();
+                        }
+                    }
+                    
+                    // Show success message using toast notification
+                    showToast('Task status updated successfully!', 'success');
+                    
+                    // Close the modal
+                    const taskModal = bootstrap.Modal.getInstance(document.getElementById('taskDetailsModal'));
+                    taskModal.hide();
+                });
+            }
+            
+            // Task Filter Functionality
+            let currentFilter = 'all';
+            
+            // Function to reset filter to default 'all'
+            function resetFilterToDefault() {
+                localStorage.setItem('userTaskFilter', 'all');
+                currentFilter = 'all';
+            }
+            
+            function initTaskFilter() {
+                // Get all filter dropdown items
+                const filterItems = document.querySelectorAll('.dropdown-item[data-filter]');
+                const filterDropdownButton = document.getElementById('taskFilterDropdown');
+                
+                // Always ensure we have a valid filter, defaulting to 'all'
+                const savedFilter = localStorage.getItem('userTaskFilter');
+                if (!savedFilter || savedFilter === 'undefined' || savedFilter === 'null') {
+                    resetFilterToDefault();
+                } else {
+                    currentFilter = savedFilter;
+                }
+                
+                // Force reset to 'all' when the page is first loaded
+                // This ensures 'All Tasks' is always the default selected option
+                resetFilterToDefault();
+                
+                // Update dropdown button text based on active filter
+                const activeFilterItem = document.querySelector(`.dropdown-item[data-filter="${currentFilter}"]`);
+                if (activeFilterItem) {
+                    filterDropdownButton.textContent = activeFilterItem.textContent;
+                    
+                    // Set active class on the saved filter item
+                    document.querySelectorAll('.dropdown-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    activeFilterItem.classList.add('active');
+                }
+                
+                // Apply the current filter
+                applyCurrentFilter();
+                
+                // Add click event listeners to filter items
+                filterItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Remove active class from all filter items
+                        filterItems.forEach(fi => fi.classList.remove('active'));
+                        
+                        // Add active class to clicked filter item
+                        this.classList.add('active');
+                        
+                        // Get filter value
+                        currentFilter = this.getAttribute('data-filter');
+                        
+                        // Update dropdown button text
+                        filterDropdownButton.textContent = this.textContent;
+                        
+                        // Save filter to localStorage
+                        localStorage.setItem('userTaskFilter', currentFilter);
+                        
+                        // Apply the filter
+                        applyCurrentFilter();
+                    });
+                });
+            }
+            
+            // Function to apply the current filter
+            function applyCurrentFilter() {
+                const taskItems = document.querySelectorAll('.task-item');
+                const taskList = document.querySelector('.task-list');
+                let visibleCount = 0;
+                
+                taskItems.forEach(item => {
+                    const taskTitle = item.querySelector('.task-title').textContent.toLowerCase();
+                    const taskDescription = item.querySelector('.task-description').textContent.toLowerCase();
+                    const taskDueDate = item.querySelector('.task-due-date').textContent.toLowerCase();
+                    const taskStatus = item.dataset.status || 'not-started';
+                    const isPriorityHigh = item.querySelector('.priority-high') !== null;
+                    
+                    let shouldShow = false;
+                    
+                    switch(currentFilter) {
+                        case 'all':
+                            shouldShow = true;
+                            break;
+                        case 'due-today':
+                            shouldShow = taskDueDate.includes('today');
+                            break;
+                        case 'completed':
+                            shouldShow = taskStatus === 'completed';
+                            break;
+                        case 'in-progress':
+                            shouldShow = taskStatus === 'in-progress';
+                            break;
+                        case 'blocked':
+                            shouldShow = taskStatus === 'blocked';
+                            break;
+                        case 'high-priority':
+                            shouldShow = isPriorityHigh;
+                            break;
+                        default:
+                            shouldShow = true;
+                    }
+                    
+                    item.style.display = shouldShow ? '' : 'none';
+                    if (shouldShow) visibleCount++;
+                });
+                
+                // Show message if no tasks match the filter
+                const noTasksMessage = document.getElementById('noTasksMessage');
+                
+                if (visibleCount === 0) {
+                    if (!noTasksMessage) {
+                        const message = document.createElement('div');
+                        message.id = 'noTasksMessage';
+                        message.className = 'alert alert-info mt-3';
+                        message.textContent = 'No tasks match the selected filter.';
+                        document.querySelector('.task-list').appendChild(message);
+                    }
+                } else if (noTasksMessage) {
+                    noTasksMessage.remove();
+                }
+                
+                // Make the task list visible now that filtering is complete
+                taskList.style.visibility = 'visible';
+            }
+            
+            // Initialize task filter
+            initTaskFilter();
+            
+            // Function to update welcome message with user's first name
+            function updateWelcomeMessage() {
+                const welcomeUserName = document.getElementById('welcomeUserName');
+                if (welcomeUserName && typeof ProjectManager !== 'undefined' && 
+                    typeof ProjectManager.UserData !== 'undefined') {
+                    
+                    const userData = ProjectManager.UserData.getUserData();
+                    if (userData && userData.firstName) {
+                        welcomeUserName.textContent = userData.firstName;
+                    } else {
+                        welcomeUserName.textContent = 'User';
+                    }
+                }
+            }
+            
+            // Function to calculate and update task counts
+            function updateTaskCounts() {
+                const totalTaskCountEl = document.getElementById('totalTaskCount');
+                const dueTodayCountEl = document.getElementById('dueTodayCount');
+                const welcomeSection = document.getElementById('welcomeSection');
+                
+                if (totalTaskCountEl && dueTodayCountEl) {
+                    const taskItems = document.querySelectorAll('.task-item');
+                    const totalTasks = taskItems.length;
+                    
+                    // Count tasks due today
+                    let dueTodayCount = 0;
+                    taskItems.forEach(task => {
+                        const dueDateEl = task.querySelector('.task-due-date');
+                        if (dueDateEl && dueDateEl.textContent.toLowerCase().includes('today')) {
+                            dueTodayCount++;
+                        }
+                    });
+                    
+                    // Update the count elements
+                    totalTaskCountEl.textContent = totalTasks;
+                    dueTodayCountEl.textContent = dueTodayCount;
+                    
+                    // Make welcome section visible now that data is loaded
+                    if (welcomeSection) {
+                        welcomeSection.style.visibility = 'visible';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

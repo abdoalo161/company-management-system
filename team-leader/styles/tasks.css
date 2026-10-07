@@ -1,0 +1,85 @@
+/* Custom styles for tasks.html */
+
+/***************************
+ * TASKS ELEMENTS
+ ***************************/
+
+/* Table header width */
+.tasks-table th:last-child {
+    width: 50px;
+}
+
+/* Task avatar styles */
+.tasks-table .avatar {
+    width: 32px;
+    height: 32px;
+}
+
+/* Task completion styling */
+tr.completed td {
+    color: #718096;
+    text-decoration: line-through;
+}
+
+tr.completed .badge {
+    opacity: 0.6;
+}
+
+tr.completed h6, 
+tr.completed small {
+    text-decoration: line-through;
+    color: #718096;
+}
+
+/* Priority badges */
+.priority-high {
+    background-color: #e53e3e;
+}
+
+.priority-medium {
+    background-color: #ed8936;
+}
+
+.priority-low {
+    background-color: #38a169;
+}
+
+/* Task modal styles */
+.task-form-section {
+    margin-bottom: 24px;
+}
+
+.task-form-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 16px;
+}
+
+/* Fix for dropdown menus in tables */
+.table-responsive,
+.card-body,
+.card,
+.table {
+    overflow: visible !important;
+}
+
+/* Ensure dropdowns appear above other elements */
+.dropdown-menu {
+    z-index: 1050;
+    position: absolute;
+}
+
+/* Fix for dropdown container */
+.dropdown {
+    position: relative !important;
+}
+
+/* Responsive styles for tasks */
+@media (max-width: 991.98px) {
+    /* Mobile-specific styles */
+}
+
+@media (max-width: 767.98px) {
+    /* Small screen adjustments */
+}

@@ -1,0 +1,226 @@
+/* Custom styles for index.html */
+
+/***************************
+ * DASHBOARD ELEMENTS
+ ***************************/
+
+/* Welcome section */
+.welcome-section {
+    background-color: #3182ce;
+    color: white;
+    padding: 32px;
+    border-radius: 8px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.1) 100%);
+    pointer-events: none;
+}
+
+.welcome-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: white;
+    font-weight: 700;
+}
+
+.welcome-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+/* Task list */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-item {
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: flex-start;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-item:hover {
+    background-color: #f8fafc;
+}
+
+.task-checkbox {
+    margin-right: 16px;
+    margin-top: 4px;
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #2d3748;
+    font-size: 1rem;
+}
+
+.task-description {
+    color: #4a5568;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.task-meta {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.task-due-date, .task-priority {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.task-due-date {
+    background-color: #edf2f7;
+    color: #4a5568;
+}
+
+.task-priority {
+    color: white;
+}
+
+.priority-high {
+    background-color: #e53e3e;
+}
+
+.priority-medium {
+    background-color: #ed8936;
+}
+
+.priority-low {
+    background-color: #38a169;
+}
+
+/* Completed task styling */
+.completed-task {
+    text-decoration: line-through;
+    color: #718096;
+}
+
+/* Responsive styles for dashboard */
+@media (max-width: 991.98px) {
+    .welcome-section {
+        padding: 24px;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-section p {
+        font-size: 1rem;
+    }
+}
+
+/***************************
+ * TASK MODAL STYLES
+ ***************************/
+
+/* Task modal styles */
+.chat-modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    padding: 15px 20px;
+}
+
+.chat-modal-header .modal-title {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.task-details-content .form-label {
+    color: #4a5568;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.task-details-content .form-control-static {
+    padding: 0.5rem 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    min-height: 38px;
+    margin-bottom: 0;
+}
+
+#taskBlockedReasonContainer {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* Make task items more interactive */
+.task-item {
+    cursor: pointer;
+    position: relative;
+}
+
+.task-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Task content styling */
+.task-content {
+    position: relative;
+}
+
+/* Task status styling */
+.task-item[data-status="completed"] {
+    background-color: #f8fff9;
+}
+
+.task-item[data-status="in-progress"] {
+    background-color: #f0f7ff;
+}
+
+.task-item[data-status="blocked"] {
+    background-color: #fff5f5;
+}
+
+/* Status badge styling */
+.status-badge {
+    margin-left: 8px;
+    font-size: 0.75rem;
+    vertical-align: middle;
+}

@@ -1,0 +1,226 @@
+/* Custom styles for team-members.html */
+
+/***************************
+ * TEAM MEMBERS ELEMENTS
+ ***************************/
+
+/* Basic dropdown styles - let Bootstrap handle positioning */
+.dropdown-menu {
+    z-index: 1050;
+}
+
+/* Make sure containers don't clip dropdowns */
+.table-responsive,
+.card-body,
+.card,
+.table {
+    overflow: visible !important;
+}
+
+/* Fix for table */
+.table {
+    margin-bottom: 0 !important;
+}
+
+/* Fix for dropdown container */
+.dropdown {
+    position: static !important;
+}
+
+/* Remove any custom dropdown display rules */
+
+/* Custom dropdown item */
+.custom-dropdown-menu .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.custom-dropdown-menu .dropdown-item:hover,
+.custom-dropdown-menu .dropdown-item:focus {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.custom-dropdown-menu .dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #e9ecef;
+}
+
+.custom-dropdown-menu .dropdown-item.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Floating dropdown items */
+.floating-dropdown .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.floating-dropdown .dropdown-item:hover,
+.floating-dropdown .dropdown-item:focus {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.floating-dropdown .dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #e9ecef;
+}
+
+.floating-dropdown .dropdown-item.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Ensure dropdown items are properly styled */
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+/* Team member avatar styles */
+.avatar {
+    width: 40px;
+    height: 40px;
+}
+
+/* Larger avatar for evaluation modal */
+#evalEmployeeAvatar {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+}
+
+/* Progress bar styles */
+.progress {
+    height: 8px;
+}
+
+/* Progress bar percentage styles */
+.progress-bar[aria-valuenow="85"] {
+    width: 85%;
+}
+
+.progress-bar[aria-valuenow="92"] {
+    width: 92%;
+}
+
+.progress-bar[aria-valuenow="68"] {
+    width: 68%;
+}
+
+.progress-bar[aria-valuenow="78"] {
+    width: 78%;
+}
+
+/* Performance rating styles */
+#ratingProgressBar {
+    width: 75%;
+    height: 100%;
+    background-color: #28a745;
+}
+
+#rangeThumb {
+    left: 75%;
+}
+
+#ratingValue {
+    background-color: #28a745;
+}
+
+/* Custom styles for the evaluation modal and form */
+.custom-range-container {
+    position: relative;
+    height: 16px;
+    margin-bottom: 1.5rem;
+}
+
+.custom-range-track {
+    height: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.custom-range-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.custom-range-thumb {
+    position: absolute;
+    top: -4px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    pointer-events: none;
+    transition: transform 0.1s;
+    z-index: 5;
+}
+
+.custom-range-input:active + .custom-range-thumb {
+    transform: scale(1.2);
+}
+
+/* Sizing for evaluation period fields */
+#quarterSelect {
+    width: 60px !important;
+}
+
+#startYear,
+#endYear {
+    width: 80px !important;
+}
+
+/* Responsive styles for team members */
+@media (max-width: 991.98px) {
+    /* Mobile-specific styles */
+}
+
+@media (max-width: 767.98px) {
+    /* Small screen adjustments */
+}

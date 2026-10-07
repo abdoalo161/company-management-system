@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Project Manager</title>
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .signup-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: #293241;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            border-radius: 10px 10px 0 0 !important;
+            border: none;
+        }
+        
+        .card-header h2 {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            border-color: #3498db;
+            padding: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .card-footer {
+            background-color: white;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 20px;
+            border-radius: 0 0 10px 10px !important;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            color: #293241;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo">
+            <h1>Project Manager</h1>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h2>Create an Account</h2>
+            </div>
+            <div class="card-body">
+                <form id="signup-form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="first-name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first-name" placeholder="Enter your first name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="last-name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last-name" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" required>
+                            <option value="" selected disabled>Select your role</option>
+                            <option value="admin">Administrator</option>
+                            <option value="team-leader">Team Leader</option>
+                            <option value="developer">Developer</option>
+                            <option value="designer">Designer</option>
+                            <option value="tester">QA Tester</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                        <small class="form-text text-muted">Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password" required>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                Already have an account? <a href="login.html" class="text-decoration-none">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="scripts/signup.js"></script>
+</body>
+</html>

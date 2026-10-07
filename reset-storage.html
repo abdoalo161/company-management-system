@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset LocalStorage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 50px;
+            background-color: #f8f9fa;
+        }
+        .reset-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0d6efd;
+            margin-bottom: 20px;
+        }
+        .btn-reset {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="reset-container">
+            <h1>Reset LocalStorage</h1>
+            <p class="lead">This tool will clear all localStorage data and reset to default values.</p>
+            <p>Use this when you want to start fresh or if you're experiencing issues with profile data.</p>
+            
+            <div class="alert alert-warning">
+                <strong>Warning:</strong> This will delete all stored user data including profile information and settings.
+            </div>
+            
+            <button id="resetButton" class="btn btn-danger btn-lg btn-reset">Reset LocalStorage</button>
+            
+            <div id="status" class="mt-4"></div>
+            
+            <div class="mt-4">
+                <a href="index.html" class="btn btn-primary">Return to Home</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('resetButton').addEventListener('click', function() {
+            // Load and execute the reset script
+            const script = document.createElement('script');
+            script.src = 'scripts/reset-storage.js';
+            document.body.appendChild(script);
+            
+            // Update status
+            document.getElementById('status').innerHTML = `
+                <div class="alert alert-success">
+                    <strong>Success!</strong> LocalStorage has been reset. 
+                    Please <a href="index.html" class="alert-link">refresh the page</a> to see the changes.
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
